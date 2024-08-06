@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { ACCOUNT_TYPE, ROLES } from '../constants/api.enums';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -6,10 +7,10 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
   @Column()
@@ -21,6 +22,7 @@ export class User {
   @Column({ type: 'enum', enum: ROLES })
   role: string;
 
+  @Exclude()
   @Column()
   password: string;
 
