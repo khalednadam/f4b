@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -12,13 +12,6 @@ import {
 } from 'nestjs-typeorm-paginate';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-/**
- * Description placeholder
- *
- * @export
- * @class UsersService
- * @typedef {UsersService}
- */
 @Injectable()
 export class UsersService {
   constructor(
@@ -49,6 +42,28 @@ export class UsersService {
   }
 
   /**
+   * Get user by username
+   */
+  async getUserByUsername(username: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { username } });
+    if (!user) {
+      throw new NotFoundException('User is not found');
+    }
+    return user;
+  }
+
+  /**
+   * Get a user by emaiil
+   */
+  async getUserByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) {
+      throw new NotFoundException('User is not found');
+    }
+    return user;
+  }
+
+  /**
    * Paginate all users
    */
   async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
@@ -65,7 +80,10 @@ export class UsersService {
   /**
    * Update a user by id
    */
-  async updateUser(id: number, updateUserDto: UpdateUserDto) {
+  async updateUser(
+    id: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UpdateResult> {
     return this.userRepository.update({ id: id }, updateUserDto);
   }
 }
