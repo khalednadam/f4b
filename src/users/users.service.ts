@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import {
@@ -10,7 +10,15 @@ import {
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
+import { UpdateUserDto } from './dto/update-user.dto';
 
+/**
+ * Description placeholder
+ *
+ * @export
+ * @class UsersService
+ * @typedef {UsersService}
+ */
 @Injectable()
 export class UsersService {
   constructor(
@@ -41,9 +49,23 @@ export class UsersService {
   }
 
   /**
-   * Get all users with pagination
+   * Paginate all users
    */
   async paginate(options: IPaginationOptions): Promise<Pagination<User>> {
     return paginate<User>(this.userRepository, options);
+  }
+
+  /**
+   * Delete a user by id
+   */
+  async deleteUser(id: number): Promise<DeleteResult> {
+    return this.userRepository.delete({ id });
+  }
+
+  /**
+   * Update a user by id
+   */
+  async updateUser(id: number, updateUserDto: UpdateUserDto) {
+    return this.userRepository.update({ id: id }, updateUserDto);
   }
 }
