@@ -1,4 +1,4 @@
-import { ACCOUNT_TYPE, ROLES } from 'src/constants/api.enums';
+import { ACCOUNT_TYPE, ROLES } from '../constants/api.enums';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

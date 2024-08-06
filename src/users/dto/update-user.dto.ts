@@ -1,5 +1,5 @@
 import { IsEnum } from 'class-validator';
-import { ACCOUNT_TYPE, ROLES } from 'src/constants/api.enums';
+import { ACCOUNT_TYPE, ROLES } from '../../constants/api.enums';
 
 export class UpdateUserDto {
   name: string;
