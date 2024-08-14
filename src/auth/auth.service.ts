@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -22,8 +23,16 @@ export class AuthService {
     return null;
   }
 
-  // TODO: add loginDto
-  async login(user: any) {
+  async login(user: LoginDto) {
+    console.log(user);
+    const payload = { email: user.email, sub: user.id };
+    return {
+      access_token: this.jwtService.sign(payload),
+      refresh_token: this.jwtService.sign(payload, { expiresIn: '7 day' }),
+    };
+  }
+
+  async refreshToken(user: LoginDto) {
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
