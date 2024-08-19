@@ -16,8 +16,7 @@ export class RefreshJwtStrategy extends PassportStrategy(
     });
   }
 
-  // TODO: implement payload type
-  async validate(payload: any) {
+  async validate(payload: { sub: Number; email: string }) {
     return { id: payload.sub, email: payload.email };
   }
 }
