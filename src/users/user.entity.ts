@@ -1,8 +1,9 @@
 import { Exclude } from 'class-transformer';
-import { ACCOUNT_TYPE, ROLES } from '../constants/api.enums';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ROLES } from '../constants/api.enums';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Project } from '../projects/project.entity';
 
-@Entity()
+@Entity('users')
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,17 +17,13 @@ export class User {
   @Column()
   avatarUrl: string;
 
-  @Column({ type: 'enum', enum: ACCOUNT_TYPE })
-  type: string;
-
   @Column({ type: 'enum', enum: ROLES })
   role: string;
+
+  @OneToMany(() => Project, (project) => project.user)
+  projects: Project[];
 
   @Exclude()
   @Column()
   password: string;
-
-  // constructor(user: Partial<User>) {
-  //   Object.assign(user);
-  // }
 }
