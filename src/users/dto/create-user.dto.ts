@@ -13,9 +13,6 @@ export class CreateUserDto {
   @IsString()
   avatarUrl: string;
 
-  @IsEnum(ACCOUNT_TYPE)
-  type: string;
-
   @Transform(({ value }) => value ?? ROLES.USER)
   @IsEnum(ROLES)
   role: string = ROLES.USER;

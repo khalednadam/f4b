@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,6 +15,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './user.entity';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { UpdateResult } from 'typeorm';
+import { Roles } from './decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from './guards/roles.guard';
 
 @Controller('users')
 export class UsersController {
@@ -41,6 +45,8 @@ export class UsersController {
     return this.usersService.paginate({ page, limit });
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
   @Delete(':id')
   async deleteUser(@Param('id') id: number): Promise<User> {
     const deleteUser = await this.usersService.getUserById(id);

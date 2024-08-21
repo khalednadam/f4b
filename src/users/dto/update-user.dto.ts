@@ -12,9 +12,6 @@ export class UpdateUserDto {
   @IsString()
   avatarUrl: string;
 
-  @IsEnum(ACCOUNT_TYPE)
-  type: string;
-
   @IsEnum(ROLES)
   @Transform(({ value }) => value ?? ROLES.USER)
   role: string = ROLES.USER;
