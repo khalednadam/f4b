@@ -20,6 +20,7 @@ import { UpdateResult } from 'typeorm';
 import { Roles } from './decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from './guards/roles.guard';
+import { ROLES } from 'src/constants/api.enums';
 
 @Controller('users')
 export class UsersController {
@@ -39,6 +40,8 @@ export class UsersController {
     return user;
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(ROLES.ADMIN)
   @Get()
   getAllUsers(
     @Param('page') page: number = 1,
@@ -48,7 +51,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(ROLES.ADMIN)
   @Delete(':id')
   async deleteUser(@Param('id') id: number): Promise<User> {
     const deleteUser = await this.usersService.getUserById(id);
