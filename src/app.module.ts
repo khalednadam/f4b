@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthMiddleware } from 'middlewares/auth.middleware';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
@@ -15,7 +17,12 @@ import { ProjectsModule } from './projects/projects.module';
     ProjectsModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

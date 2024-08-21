@@ -19,7 +19,7 @@ import { Pagination } from 'nestjs-typeorm-paginate';
 import { UpdateResult } from 'typeorm';
 import { Roles } from './decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { RolesGuard } from './guards/roles.guard';
+import { RolesGuard } from '../guards/roles.guard';
 import { ROLES } from 'src/constants/api.enums';
 
 @Controller('users')
