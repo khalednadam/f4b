@@ -17,12 +17,6 @@ import { RolesGuard } from './guards/roles.guard';
     ProjectsModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
-  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

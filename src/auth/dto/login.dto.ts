@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber } from 'class-validator';
+import { IsEmail, IsNumber, IsString } from 'class-validator';
 
 export class LoginDto {
   @IsEmail()
@@ -6,4 +6,7 @@ export class LoginDto {
 
   @IsNumber()
   id: number;
+
+  @IsString()
+  role: string;
 }

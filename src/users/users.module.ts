@@ -9,6 +9,5 @@ import { RolesGuard } from '../guards/roles.guard';
   imports: [TypeOrmModule.forFeature([User])],
   providers: [UsersService, RolesGuard],
   controllers: [UsersController],
-  exports: [UsersService],
 })
 export class UsersModule {}
