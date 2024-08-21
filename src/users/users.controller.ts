@@ -7,6 +7,8 @@ import {
   Param,
   Post,
   Put,
+  Request,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -57,11 +59,16 @@ export class UsersController {
     return deleteUser;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put('user/:id')
   async updateUser(
+    @Request() req,
     @Param('id') id: number,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<UpdateResult> {
+    if (req.user.id !== id) {
+      throw new UnauthorizedException();
+    }
     return this.usersService.updateUser(id, updateUserDto);
   }
 }
