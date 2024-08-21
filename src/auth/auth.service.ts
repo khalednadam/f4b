@@ -13,6 +13,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+  /**
+   * validate who is the user by the username and password
+   */
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.getUserByEmail(username);
     const isMatch = await bcrypt.compare(password, user.password);
@@ -23,8 +26,10 @@ export class AuthService {
     return null;
   }
 
+  /**
+   * Login
+   */
   async login(user: LoginDto) {
-    console.log(user);
     const payload = { email: user.email, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
@@ -32,6 +37,9 @@ export class AuthService {
     };
   }
 
+  /**
+   * set a new access token using the refresh token
+   */
   async refreshToken(user: LoginDto) {
     const payload = { email: user.email, sub: user.id };
     return {
