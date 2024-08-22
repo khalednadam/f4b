@@ -1,6 +1,6 @@
 import { IsString, IsEmail, IsEnum } from 'class-validator';
-import { Exclude, Expose, Transform } from 'class-transformer';
-import { ACCOUNT_TYPE, ROLES } from '../../constants/api.enums';
+import { Transform } from 'class-transformer';
+import { ROLES } from '../../constants/api.enums';
 
 export class UpdateUserDto {
   @IsEmail()
