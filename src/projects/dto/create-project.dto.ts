@@ -13,7 +13,4 @@ export class CreateProjectDto {
 
   @IsEnum(PROJECT_TYPE)
   type: string;
-
-  @IsInt()
-  userId: number;
 }
