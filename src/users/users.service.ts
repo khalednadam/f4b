@@ -38,6 +38,9 @@ export class UsersService {
   async getUserById(id: number) {
     return this.userRepository.findOne({
       where: { id },
+      relations: {
+        projects: true,
+      },
     });
   }
 
