@@ -1,6 +1,12 @@
 import { Exclude } from 'class-transformer';
 import { ROLES } from '../constants/api.enums';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Project } from '../projects/project.entity';
 
 @Entity('users')
