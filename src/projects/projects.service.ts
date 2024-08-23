@@ -63,6 +63,7 @@ export class ProjectsService {
    * paginate all the projects
    * @param options pagination options
    */
+  // TODO: add more query filters for pagination to be applied on projects
   async getAll(options: IPaginationOptions): Promise<Pagination<Project>> {
     return paginate<Project>(this.projectRepository, options, {
       relations: {
