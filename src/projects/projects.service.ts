@@ -51,9 +51,6 @@ export class ProjectsService {
     userId: number,
   ): Promise<Pagination<Project>> {
     return paginate<Project>(this.projectRepository, options, {
-      relations: {
-        user: true,
-      },
       where: {
         user: {
           id: userId,
