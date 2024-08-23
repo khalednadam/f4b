@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Request,
   UnauthorizedException,
   UseGuards,
@@ -21,6 +22,7 @@ import { Roles } from './decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { ROLES } from 'src/constants/api.enums';
+import { PaginateUsersDto } from './dto/paginate-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -43,11 +45,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(ROLES.ADMIN)
   @Get()
-  getAllUsers(
-    @Param('page') page: number = 1,
-    @Param('limit') limit: number = 20,
-  ): Promise<Pagination<User>> {
-    return this.usersService.paginate({ page, limit });
+  getAllUsers(@Query() query: PaginateUsersDto): Promise<Pagination<User>> {
+    return this.usersService.paginate({ page: query.page, limit: query.limit });
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
