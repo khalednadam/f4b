@@ -34,13 +34,13 @@ export class AuthService {
       email: user.email,
       sub: user.id,
       role: user.role,
-      name: user.name,
+      username: user.username,
     };
     return {
       email: user.email,
       id: user.id,
       role: user.role,
-      name: user.name,
+      username: user.username,
       access_token: this.jwtService.sign(payload),
       refresh_token: this.jwtService.sign(payload, { expiresIn: '7 day' }),
     };
@@ -54,7 +54,7 @@ export class AuthService {
       email: user.email,
       sub: user.id,
       role: user.role,
-      name: user.name,
+      username: user.username,
     };
     return {
       access_token: this.jwtService.sign(payload),

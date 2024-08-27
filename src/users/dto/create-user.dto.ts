@@ -3,7 +3,6 @@ import { ACCOUNT_TYPE, ROLES } from '../../constants/api.enums';
 import { Transform } from 'class-transformer';
 
 export class CreateUserDto {
-  // name: string;
   @IsEmail()
   email: string;
 

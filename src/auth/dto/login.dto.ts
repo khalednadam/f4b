@@ -5,7 +5,7 @@ export class LoginDto {
   email: string;
 
   @IsString()
-  name: string;
+  username: string;
 
   @IsNumber()
   id: number;

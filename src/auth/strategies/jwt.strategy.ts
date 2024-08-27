@@ -17,13 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     sub: Number;
     email: string;
     role: string;
-    name: string;
+    username: string;
   }) {
     return {
       id: payload.sub,
       email: payload.email,
       role: payload.role,
-      name: payload.name,
+      username: payload.username,
     };
   }
 }
