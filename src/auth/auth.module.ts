@@ -22,8 +22,10 @@ import { Project } from 'src/projects/project.entity';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.getOrThrow('JWT_SECRET'),
-        signOptions: { expiresIn: '30m' },
+        secret: configService.getOrThrow('JWT_ACCESS_SECRET'),
+        signOptions: {
+          expiresIn: configService.getOrThrow('JWT_ACCESS_EXPIRATION'),
+        },
       }),
     }),
   ],
