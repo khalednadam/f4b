@@ -5,6 +5,8 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 
+const EXPIRE_TIME = 1000 * 60 * 30;
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -45,6 +47,7 @@ export class AuthService {
       refresh_token: this.jwtService.sign(payload, {
         expiresIn: this.configService.getOrThrow('JWT_REFRESH_EXPIRATION'),
       }),
+      expiration_time: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
     };
   }
 
@@ -60,6 +63,7 @@ export class AuthService {
     };
     return {
       access_token: this.jwtService.sign(payload),
+      expiration_time: new Date().setTime(new Date().getTime() + EXPIRE_TIME),
     };
   }
 }
