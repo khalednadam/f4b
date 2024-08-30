@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
 import { ACCOUNT_TYPE, ROLES } from '../../constants/api.enums';
 import { Transform } from 'class-transformer';
 
@@ -10,7 +10,8 @@ export class CreateUserDto {
   username: string;
 
   @IsString()
-  avatarUrl: string;
+  @IsOptional()
+  avatarUrl: string | null;
 
   @Transform(({ value }) => value ?? ROLES.USER)
   @IsEnum(ROLES)

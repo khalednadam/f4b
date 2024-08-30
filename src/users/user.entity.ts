@@ -20,8 +20,8 @@ export class User {
   @Column({ unique: true })
   username: string;
 
-  @Column()
-  avatarUrl: string;
+  @Column({ nullable: true, default: null })
+  avatarUrl: string | null;
 
   @Column({ type: 'enum', enum: ROLES })
   role: string;
