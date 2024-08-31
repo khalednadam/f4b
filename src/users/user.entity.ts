@@ -30,6 +30,6 @@ export class User {
   projects: Project[];
 
   @Exclude()
-  @Column({ select: false })
+  @Column()
   password: string;
 }
