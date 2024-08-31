@@ -13,6 +13,7 @@ export class CreateUserDto {
   email: string;
 
   @IsString()
+  @Matches('^[a-zA-Z0-9](?!.*[._]{2})[a-zA-Z0-9._]{0,28}[a-zA-Z0-9]$')
   username: string;
 
   @IsString()
@@ -24,6 +25,6 @@ export class CreateUserDto {
   role: string = ROLES.USER;
 
   @IsString()
-  @Matches('/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*W)(?!.* ).{8,}$/')
+  @Matches('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$')
   password: string;
 }
