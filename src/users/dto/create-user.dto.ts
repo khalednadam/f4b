@@ -1,5 +1,11 @@
-import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
-import { ACCOUNT_TYPE, ROLES } from '../../constants/api.enums';
+import {
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
+import { ROLES } from '../../constants/api.enums';
 import { Transform } from 'class-transformer';
 
 export class CreateUserDto {
@@ -18,5 +24,6 @@ export class CreateUserDto {
   role: string = ROLES.USER;
 
   @IsString()
+  @Matches('/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*W)(?!.* ).{8,}$/')
   password: string;
 }
