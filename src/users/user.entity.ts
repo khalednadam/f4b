@@ -3,7 +3,7 @@ import { ROLES } from '../constants/api.enums';
 import {
   Column,
   Entity,
-  JoinColumn,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -26,8 +26,11 @@ export class User {
   @Column({ type: 'enum', enum: ROLES })
   role: string;
 
-  @OneToMany(() => Project, (project) => project.user)
+  @OneToMany(() => Project, (project) => project.owner)
   projects: Project[];
+
+  @ManyToMany(() => Project, (project) => project.integrators)
+  integratedProjects: Project[];
 
   @Exclude()
   @Column()

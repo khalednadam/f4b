@@ -21,7 +21,9 @@ export class Project {
   @IsUrl()
   repositoryLink: string;
 
-  // TODO: Add users who worked on it (or something similar)
   @ManyToOne(() => User, (user) => user.projects)
-  user: User;
+  owner: User;
+
+  @ManyToOne(() => User, (user) => user.integratedProjects)
+  integrators: User[];
 }
