@@ -3,6 +3,7 @@ import { ROLES } from '../constants/api.enums';
 import {
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -31,6 +32,20 @@ export class User {
 
   @ManyToMany(() => Project, (project) => project.integrators)
   integratedProjects: Project[];
+
+  @ManyToMany(() => Project)
+  @JoinTable({
+    name: 'user_saved_projects',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'project_id',
+      referencedColumnName: 'id',
+    },
+  })
+  savedProjects: Project[];
 
   @Exclude()
   @Column()
