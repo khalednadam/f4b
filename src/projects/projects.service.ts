@@ -22,10 +22,10 @@ export class ProjectsService {
    */
   async create(
     createProjectDto: CreateProjectDto,
-    userId: number,
+    ownerId: number,
   ): Promise<Project> {
     const project = new Project();
-    Object.assign(project, { ...createProjectDto, user: userId });
+    Object.assign(project, { ...createProjectDto, owner: ownerId });
     return this.projectRepository.save(project);
   }
 
@@ -42,18 +42,18 @@ export class ProjectsService {
   }
 
   /**
-   * paginate the projects of a user using the user id
+   * paginate the projects of a owner using the owner id
    * @param options pagination options
-   * @param userId
+   * @param ownerId
    */
-  async paginateByUser(
+  async paginateByOwner(
     options: IPaginationOptions,
-    userId: number,
+    ownerId: number,
   ): Promise<Pagination<Project>> {
     return paginate<Project>(this.projectRepository, options, {
       where: {
-        user: {
-          id: userId,
+        owner: {
+          id: ownerId,
         },
       },
     });
@@ -67,7 +67,7 @@ export class ProjectsService {
   async getAll(options: IPaginationOptions): Promise<Pagination<Project>> {
     return paginate<Project>(this.projectRepository, options, {
       relations: {
-        user: true,
+        owner: true,
       },
     });
   }
@@ -88,7 +88,7 @@ export class ProjectsService {
     const project = await this.projectRepository.findOne({
       where: { id },
       relations: {
-        user: true,
+        owner: true,
       },
     });
     if (!project) {

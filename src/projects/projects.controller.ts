@@ -48,7 +48,7 @@ export class ProjectsController {
     @Body() updateProjectDto: UpdateProjectDto,
   ): Promise<UpdateResult> {
     const project = await this.projectsService.getOne(id);
-    if (project.user.id !== req.user.id) {
+    if (project.owner.id !== req.user.id) {
       throw new UnauthorizedException(
         'You are not authorized to update this project',
       );
@@ -57,14 +57,14 @@ export class ProjectsController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('of/:userId')
-  async paginateProjectsOfUser(
-    @Param('userId') userId: number,
+  @Get('of/:ownerId')
+  async paginateProjectsOfOwner(
+    @Param('ownerId') ownerId: number,
     @Query() query: PaginateProjectsDto,
   ): Promise<Pagination<Project>> {
-    return this.projectsService.paginateByUser(
+    return this.projectsService.paginateByOwner(
       { limit: query.limit, page: query.page },
-      userId,
+      ownerId,
     );
   }
 
@@ -83,7 +83,7 @@ export class ProjectsController {
   @Delete('project/:id')
   async delete(@Request() req, @Param('id') id: number): Promise<DeleteResult> {
     const project = await this.projectsService.getOne(id);
-    if (project.user.id !== req.user.id && req.user.role !== ROLES.ADMIN) {
+    if (project.owner.id !== req.user.id && req.user.role !== ROLES.ADMIN) {
       throw new UnauthorizedException(
         'You are not authorized to delete this project',
       );
