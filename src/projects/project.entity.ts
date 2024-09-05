@@ -1,7 +1,14 @@
 import { IsUrl } from 'class-validator';
 import { PROJECT_TYPE } from 'src/constants/api.enums';
 import { User } from '../users/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('projects')
 export class Project {
@@ -24,6 +31,12 @@ export class Project {
   @ManyToOne(() => User, (user) => user.projects)
   owner: User;
 
-  @ManyToOne(() => User, (user) => user.integratedProjects)
+  @ManyToMany(() => User, (user) => user.integratedProjects)
+  @JoinTable({
+    name: 'project_integrators',
+  })
   integrators: User[];
+
+  @ManyToMany(() => User, (user) => user.savedProjects)
+  savedBy: User[];
 }

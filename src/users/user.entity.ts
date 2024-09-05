@@ -33,17 +33,9 @@ export class User {
   @ManyToMany(() => Project, (project) => project.integrators)
   integratedProjects: Project[];
 
-  @ManyToMany(() => Project)
+  @ManyToMany(() => Project, (project) => project.savedBy)
   @JoinTable({
     name: 'user_saved_projects',
-    joinColumn: {
-      name: 'user_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'project_id',
-      referencedColumnName: 'id',
-    },
   })
   savedProjects: Project[];
 

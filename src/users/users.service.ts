@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
@@ -11,12 +15,16 @@ import {
   Pagination,
 } from 'nestjs-typeorm-paginate';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Project } from '../projects/project.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
+    @InjectRepository(Project)
+    private readonly projectRepository: Repository<Project>,
     private readonly configService: ConfigService,
   ) {}
 
@@ -88,5 +96,27 @@ export class UsersService {
     updateUserDto: UpdateUserDto,
   ): Promise<UpdateResult> {
     return this.userRepository.update({ id: id }, updateUserDto);
+  }
+
+  /**
+   * save a project
+   * @param {number} projectId project id
+   * @param {number} userId user id
+   */
+  async saveProject(projectId: number, userId: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['savedProjects'],
+    });
+    const project = await this.projectRepository.findOneBy({ id: projectId });
+    const alreadySaved = user.savedProjects.some(
+      (project) => project.id === projectId,
+    );
+
+    if (!alreadySaved) {
+      user.savedProjects.push(project);
+    }
+
+    return this.userRepository.save(user);
   }
 }

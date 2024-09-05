@@ -73,4 +73,10 @@ export class UsersController {
     }
     return this.usersService.updateUser(id, updateUserDto);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('save/:projectId')
+  async saveProjec(@Request() req, @Param('projectId') projectId: number) {
+    return this.usersService.saveProject(projectId, req.user.id);
+  }
 }
