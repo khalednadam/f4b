@@ -21,12 +21,14 @@ export class RefreshJwtStrategy extends PassportStrategy(
     email: string;
     role: string;
     username: string;
+    image?: string;
   }) {
     return {
       id: payload.sub,
       email: payload.email,
       role: payload.role,
       username: payload.username,
+      image: payload.image,
     };
   }
 }

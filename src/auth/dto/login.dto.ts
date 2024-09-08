@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsString } from 'class-validator';
+import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class LoginDto {
   @IsEmail()
@@ -12,4 +12,8 @@ export class LoginDto {
 
   @IsString()
   role: string;
+
+  @IsString()
+  @IsOptional()
+  avatarUrl?: string;
 }

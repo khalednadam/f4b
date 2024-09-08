@@ -37,12 +37,14 @@ export class AuthService {
       sub: user.id,
       role: user.role,
       username: user.username,
+      image: user.avatarUrl,
     };
     return {
       email: user.email,
       id: user.id,
       role: user.role,
       username: user.username,
+      image: user.avatarUrl,
       access_token: this.jwtService.sign(payload),
       refresh_token: this.jwtService.sign(payload, {
         expiresIn: this.configService.getOrThrow('JWT_REFRESH_EXPIRATION'),
@@ -60,6 +62,7 @@ export class AuthService {
       sub: user.id,
       role: user.role,
       username: user.username,
+      image: user.avatarUrl,
     };
     return {
       access_token: this.jwtService.sign(payload),
